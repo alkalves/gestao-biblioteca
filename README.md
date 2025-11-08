@@ -47,8 +47,7 @@ para que eu possa manter o acervo atualizado e organizado.
 Regras de Negócio:
 - Somente usuários autenticados podem cadastrar livros.
 - Todo livro deve estar associado a um autor válido.
-- O campo gênero é obrigatório.
-
+- Campos obrigatórios: título, ano de publicação, autor e gênero.
 
 5️⃣ Funcionalidade: Registro de Leitor
 
@@ -60,7 +59,7 @@ para que eu possa controlar quem realiza empréstimos de livros.
 Regras de Negócio:
 - Somente usuários autenticados podem cadastrar leitores.
 - Não pode haver duplicidade de e-mail entre leitores.
-- Campos obrigatórios: nome, e-mail e telefone.
+- Campos obrigatórios: nome, cpf, e-mail e telefone.
 
 
 6️⃣ Funcionalidade: Registro de Empréstimo de Livro
@@ -68,12 +67,14 @@ Regras de Negócio:
 User Story:
 Como bibliotecário autenticado,
 eu quero registrar empréstimos de livros para leitores,
-para que eu possa controlar quais livros estão emprestados e suas respectivas devoluções.
+para que eu possa controlar os livros emprestados, seus prazos de devolução e valores cobrados.
 
 Regras de Negócio:
 - Um livro só pode ser emprestado se estiver disponível.
-- O empréstimo deve registrar o leitor e o livro associados.
-- Ao emprestar um livro, seu status disponível deve ser alterado para false.
-- Ao registrar a devolução, o status do livro deve voltar a true e o empréstimo deve ser marcado como "devolvido".
-
-Campos obrigatórios: livro_id, leitor_id, data_emprestimo, data_devolucao.
+- O empréstimo deve registrar obrigatoriamente: livro emprestado, leitor, data de empréstimo, prazo de devolução, valor do empréstimo, valor de multa diária.
+- Ao emprestar um livro, ele deverá ficar como indisponível.
+- Ao registrar a devolução, o status do livro deveria voltar para disponível, o empréstimo deve ser marcado como "devolvido", e a data de devolução e valor pago deverão ser registrados.
+- Se o livro for devolvido após o prazo de devolução definido no empréstimo do livro, o sistema deve:
+Calcular o número de dias de atraso.
+Calcular o valor total devido como: valor total = valor do empréstimo + (dias de atraso × valor da multa diária).
+Armazenar o valor total devido no registro do empréstimo.
