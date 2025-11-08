@@ -1,0 +1,14 @@
+[
+  {
+    "email": "bibliotest1@email.com",
+    "senha": "senha123"
+  },
+  {
+    "email": "bibliotest1@email.com",
+    "senha": "senhaErrada"
+  },
+  {
+    "email": "",
+    "senha": ""
+  }
+]

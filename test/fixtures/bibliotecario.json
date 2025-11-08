@@ -1,0 +1,17 @@
+[
+  {
+    "nome": "Bibliotecário Teste",
+    "email": "bibliotest1@email.com",
+    "senha": "senha123"
+  },
+  {
+    "nome": "Bibliotecário Existente",
+    "email": "bibliotest1@email.com",
+    "senha": "senha123"
+  },
+  {
+    "nome": "",
+    "email": "",
+    "senha": ""
+  }
+]
