@@ -1,0 +1,249 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Gestão de Biblioteca",
+    "version": "1.0.0",
+    "description": "API REST para gerenciamento de biblioteca, incluindo autenticação JWT, registro de bibliotecários, autores, livros, leitores e empréstimos."
+  },
+  "paths": {
+    "/api/bibliotecarios/register": {
+      "post": {
+        "summary": "Registrar bibliotecário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": { "type": "string" },
+                  "email": { "type": "string" },
+                  "senha": { "type": "string" }
+                },
+                "required": ["nome", "email", "senha"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Bibliotecário registrado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/BibliotecarioResponse" }
+              }
+            }
+          },
+          "400": { "description": "Campos obrigatórios" },
+          "409": { "description": "E-mail já cadastrado" }
+        }
+      }
+    },
+    "/api/bibliotecarios/login": {
+      "post": {
+        "summary": "Login de bibliotecário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "senha": { "type": "string" }
+                },
+                "required": ["email", "senha"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login bem-sucedido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "description": "Credenciais inválidas" }
+        }
+      }
+    },
+    "/api/autores": {
+      "post": {
+        "summary": "Registrar autor",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": { "type": "string" },
+                  "nacionalidade": { "type": "string" }
+                },
+                "required": ["nome", "nacionalidade"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Autor registrado" },
+          "400": { "description": "Campos obrigatórios" },
+          "409": { "description": "Autor já cadastrado" },
+          "401": { "description": "Token não fornecido ou inválido" }
+        }
+      }
+    },
+    "/api/livros": {
+      "post": {
+        "summary": "Registrar livro",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "titulo": { "type": "string" },
+                  "anoPublicacao": { "type": "string" },
+                  "autorId": { "type": "integer" },
+                  "genero": { "type": "string" }
+                },
+                "required": ["titulo", "anoPublicacao", "autorId", "genero"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Livro registrado" },
+          "400": { "description": "Campos obrigatórios" },
+          "404": { "description": "Autor não encontrado" },
+          "401": { "description": "Token não fornecido ou inválido" }
+        }
+      }
+    },
+    "/api/leitores": {
+      "post": {
+        "summary": "Registrar leitor",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": { "type": "string" },
+                  "cpf": { "type": "string" },
+                  "email": { "type": "string" },
+                  "telefone": { "type": "string" }
+                },
+                "required": ["nome", "cpf", "email", "telefone"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Leitor registrado" },
+          "400": { "description": "Campos obrigatórios" },
+          "409": { "description": "E-mail já cadastrado" },
+          "401": { "description": "Token não fornecido ou inválido" }
+        }
+      }
+    },
+    "/api/emprestimos": {
+      "post": {
+        "summary": "Registrar empréstimo de livro",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "livroId": { "type": "integer" },
+                  "leitorId": { "type": "integer" },
+                  "dataEmprestimo": { "type": "string", "format": "date" },
+                  "prazoDevolucao": { "type": "string", "format": "date" },
+                  "valorEmprestimo": { "type": "number" },
+                  "valorMultaDiaria": { "type": "number" }
+                },
+                "required": ["livroId", "leitorId", "dataEmprestimo", "prazoDevolucao", "valorEmprestimo", "valorMultaDiaria"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Empréstimo registrado" },
+          "400": { "description": "Campos obrigatórios" },
+          "409": { "description": "Livro não disponível" },
+          "404": { "description": "Leitor não encontrado" },
+          "401": { "description": "Token não fornecido ou inválido" }
+        }
+      }
+    },
+    "/api/emprestimos/devolucao/{id}": {
+      "post": {
+        "summary": "Registrar devolução de livro",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dataDevolucao": { "type": "string", "format": "date" },
+                  "valorPago": { "type": "number" }
+                },
+                "required": ["dataDevolucao", "valorPago"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Devolução registrada" },
+          "404": { "description": "Empréstimo não encontrado ou já devolvido" },
+          "401": { "description": "Token não fornecido ou inválido" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BibliotecarioResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "nome": { "type": "string" },
+          "email": { "type": "string" }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

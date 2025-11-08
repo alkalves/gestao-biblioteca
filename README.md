@@ -1,3 +1,46 @@
+# 📚 Sistema de Gestão de Biblioteca
+
+API REST desenvolvida em Node.js com Express para gerenciar o acervo de uma biblioteca, incluindo autenticação JWT, documentação Swagger e armazenamento em banco de dados em memória.
+
+## Estrutura do Projeto
+
+```
+├── src
+│   ├── app.js                # Arquivo principal da aplicação
+│   ├── routes/               # Rotas da API
+│   ├── controllers/          # Lógica dos endpoints
+│   ├── services/             # Regras de negócio e acesso ao banco
+│   ├── models/               # Modelos das entidades
+│   └── middleware/           # Middlewares (ex: autenticação)
+├── resources
+│   └── swagger.json          # Documentação Swagger
+├── package.json              # Dependências e scripts
+└── README.md                 # Documentação do projeto
+```
+
+## Como executar
+
+1. Instale as dependências:
+	```bash
+	npm install
+	```
+2. Inicie o servidor:
+	```bash
+	npm start
+	```
+3. Acesse a documentação Swagger em [http://localhost:3000/swagger](http://localhost:3000/swagger)
+
+## Principais Tecnologias
+- Node.js
+- Express
+- JWT (jsonwebtoken)
+- Swagger (swagger-ui-express)
+
+## Documentação da API
+A documentação completa dos endpoints, modelos e códigos de erro está disponível em `/swagger`.
+
+---
+
 📋 Lista de User Stories – Sistema de Gestão de Biblioteca
 
 1️⃣ Funcionalidade: Registro de Bibliotecário
