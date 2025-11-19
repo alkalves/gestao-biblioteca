@@ -1,2 +1,4 @@
 node_modules/
 CondicoesDeTeste.txt
+.env
+mochawesome-report/
